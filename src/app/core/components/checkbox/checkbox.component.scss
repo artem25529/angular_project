@@ -1,0 +1,37 @@
+@use 'styles/main' as *;
+
+:host {
+  display: flex;
+  align-items: baseline;
+  gap: spacing(sm);
+}
+
+.checkbox {
+  cursor: pointer;
+  height: 1.06lh;
+  width: 1.06lh;
+
+  @include grid-center;
+  @include control;
+  @include transition-fast;
+
+  padding: 0;
+  transition-property: background-color;
+
+  &.checked {
+    background-color: color(primary);
+    border-color: color(primary);
+
+    fa-icon {
+      visibility: visible;
+    }
+  }
+}
+
+fa-icon {
+  height: 1.1lh;
+  aspect-ratio: 1;
+  color: color-white();
+  visibility: hidden;
+  translate: 0.08em -0.05em;
+}

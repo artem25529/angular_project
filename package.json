@@ -29,6 +29,11 @@
     "@angular/forms": "^21.1.0",
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
+    "@fortawesome/angular-fontawesome": "^4.0.0",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@internationalized/number": "^3.6.5",
+    "lodash": "^4.17.23",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -36,6 +41,9 @@
     "@angular/build": "^21.1.0",
     "@angular/cli": "^21.1.0",
     "@angular/compiler-cli": "^21.1.0",
-    "typescript": "~5.9.2"
+    "@types/lodash": "^4.17.23",
+    "@types/uuid": "^10.0.0",
+    "typescript": "~5.9.2",
+    "uuid": "^13.0.0"
   }
 }

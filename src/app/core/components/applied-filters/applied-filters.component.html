@@ -1,0 +1,17 @@
+@if (filters$ | async; as filters) {
+  <ul class="applied-filters">
+    @for (filter of filters; track $index) {
+      <li class="applied-filters__item label label-neutral">
+        {{ filter.label }}
+        <div class="applied-filters__pipe"></div>
+        <button
+          class="applied-filters__item-close"
+          type="button"
+          (click)="handleClick(filter.name)"
+        >
+          <fa-icon [icon]="['fas', 'x']" />
+        </button>
+      </li>
+    }
+  </ul>
+}

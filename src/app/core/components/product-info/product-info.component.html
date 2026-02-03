@@ -1,0 +1,19 @@
+<article class="product-info">
+  <img class="product-info__image" [src]="product.image" alt="product-image" />
+  <div class="product-info__content-wrapper">
+    <div class="product-info__content">
+      <header class="text-header">{{ product.title }}</header>
+      <div class="product-info__rating">
+        <app-rating [rating]="product.rating.rate" />
+        <div class="font-semi-bold">({{ product.rating.count }}&nbsp;reviews)</div>
+      </div>
+      @if (authService.loggedInUser()) {
+        <app-add-to-cart-button [appStockInfo]="product.stock" [product]="product" />
+      }
+      <div class="font-bold">Price: {{ product.price | currency: 'USD' : 'symbol' : '2.2-2' }}</div>
+    </div>
+    <div class="text">
+      {{ product.description }}
+    </div>
+  </div>
+</article>

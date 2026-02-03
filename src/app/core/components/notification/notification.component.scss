@@ -1,0 +1,28 @@
+@use 'styles/main' as *;
+
+:host {
+  position: fixed;
+  top: 5rem;
+  z-index: 100;
+  left: 50%;
+  translate: -50%;
+
+  @include flex-center;
+}
+
+.notification {
+  max-width: 1600px;
+
+  @include padded-lg;
+  @include rounded-md;
+  @include font-bold;
+  @include font-size-lg;
+
+  &.error {
+    background-color: color(danger, light);
+  }
+
+  &.success {
+    background-color: color(success, light);
+  }
+}

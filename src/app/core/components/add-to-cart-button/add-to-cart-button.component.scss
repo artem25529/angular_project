@@ -1,0 +1,7 @@
+@use 'styles/main.scss' as *;
+
+.add-to-cart {
+  display: flex;
+  align-items: center;
+  gap: spacing(md);
+}

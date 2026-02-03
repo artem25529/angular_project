@@ -1,0 +1,8 @@
+@use 'styles/main' as *;
+
+:host {
+  text-align: center;
+
+  @include padded-md;
+  @include font-semi-bold;
+}

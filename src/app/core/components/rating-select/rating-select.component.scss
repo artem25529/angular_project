@@ -1,0 +1,25 @@
+@use 'styles/main' as *;
+
+:host {
+  display: block;
+  width: max-content;
+  color: color(neutral);
+
+  @include rounded-sm;
+}
+
+fa-icon {
+  cursor: pointer;
+}
+
+:host:has(fa-icon.selected):not(:has(fa-icon:hover)) {
+  fa-icon:not(fa-icon.selected ~ fa-icon) {
+    color: color-rating();
+  }
+}
+
+:host:has(fa-icon:hover) {
+  fa-icon:not(fa-icon:hover ~ fa-icon) {
+    color: color-rating();
+  }
+}

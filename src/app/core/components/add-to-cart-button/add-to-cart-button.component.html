@@ -1,0 +1,13 @@
+<div class="add-to-cart">
+  @if (itemsInCartCount) {
+    <button class="btn btn-primary" type="button" (click)="changeCount(false)">
+      <fa-icon [icon]="['fas', 'minus']" />
+    </button>
+    <div class="font-bold">{{ itemsInCartCount }}</div>
+    <button class="btn btn-primary" type="button" (click)="changeCount()">
+      <fa-icon [icon]="['fas', 'plus']" />
+    </button>
+  } @else {
+    <button class="btn btn-primary" type="button" (click)="changeCount()">Add To Cart</button>
+  }
+</div>

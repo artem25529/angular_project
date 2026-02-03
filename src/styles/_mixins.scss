@@ -1,0 +1,275 @@
+@use 'sass:map';
+@use 'colors' as *;
+
+$spacings: (
+  xs: 0.125rem,
+  sm: 0.25rem,
+  md: 0.5rem,
+  lg: 1rem,
+  xl: 1.5rem,
+);
+
+@function spacing($key) {
+  @return map.get($spacings, $key);
+}
+
+@mixin grid-center {
+  display: grid;
+  place-items: center;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin line-clamp($lines) {
+  height: #{$lines}lh;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @if ($lines == 1) {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $lines;
+  }
+}
+
+@mixin transition-fast {
+  transition: all 200ms;
+}
+
+@mixin transition-slow {
+  transition: all 400ms;
+}
+
+@mixin rounded-sm {
+  border-radius: spacing(sm);
+}
+
+@mixin rounded-md {
+  border-radius: spacing(md);
+}
+
+@mixin rounded-full {
+  border-radius: 50%;
+}
+
+@mixin font-semi-bold {
+  font-weight: 500;
+}
+
+@mixin font-bold {
+  font-weight: 600;
+}
+
+@mixin font-heavy {
+  font-weight: 700;
+}
+
+@mixin padded-sm {
+  padding: spacing(xs) spacing(sm);
+}
+
+@mixin padded-md {
+  padding: spacing(sm) spacing(md);
+}
+
+@mixin padded-lg {
+  padding: spacing(md) spacing(lg);
+}
+
+@mixin font-size-lg {
+  font-size: 1.1rem;
+}
+
+@mixin font-size-sm {
+  font-size: 0.9rem;
+}
+
+@mixin bordered {
+  border-width: 1.6px;
+  border-style: solid;
+}
+
+@mixin text {
+  line-height: 1.66;
+}
+
+@mixin text-condensed {
+  line-height: 1.3;
+}
+
+@mixin control {
+  border-color: color(neutral);
+
+  @include bordered;
+  @include padded-sm;
+  @include rounded-sm;
+}
+
+@mixin shadow-sm {
+  box-shadow: 0 2px 5px color-shadow();
+}
+
+@mixin shadow-md {
+  box-shadow: 0 5px 15px -5px color-shadow();
+}
+
+@mixin page-md {
+  max-width: 1000px;
+  margin-inline: auto;
+  padding: spacing(xl);
+  display: flex;
+}
+
+@mixin outlined {
+  outline: 2px solid;
+}
+
+@mixin control-error {
+  @include outlined;
+
+  outline-color: color(danger, light);
+}
+
+.form-control {
+  @include flex-col;
+}
+
+.control {
+  @include control;
+}
+
+.font-semi-bold {
+  @include font-semi-bold;
+}
+
+.font-bold {
+  @include font-bold;
+}
+
+.text-header {
+  font-size: 1.5rem;
+
+  @include text-condensed;
+  @include font-semi-bold;
+}
+
+.font-size-lg {
+  @include font-size-lg;
+}
+
+.font-size-sm {
+  @include font-size-sm;
+}
+
+.text {
+  @include text;
+}
+
+.text-condensed {
+  @include text-condensed;
+}
+
+.error-msg {
+  color: color(danger, dark);
+  margin-top: spacing(xs);
+}
+
+.nav-bar__link {
+  @include font-semi-bold;
+  @include transition-fast;
+  @include rounded-sm;
+
+  transition-property: color;
+
+  &.active {
+    color: color(secondary);
+  }
+
+  &:hover {
+    color: color(secondary, light);
+  }
+}
+
+.btn {
+  @include bordered;
+  @include padded-md;
+  @include rounded-sm;
+  @include font-semi-bold;
+  @include transition-fast;
+
+  transition-property: background-color;
+}
+
+.btn-sm {
+  @include font-size-sm;
+  @include padded-sm;
+
+  padding-bottom: unset;
+}
+
+@each $color in map.keys($colors) {
+  $palette: map.get($colors, $color);
+  $color-base: map.get($palette, base);
+  $color-light: map.get($palette, light);
+  $color-dark: map.get($palette, dark);
+
+  .color-#{$color} {
+    color: $color-dark;
+  }
+
+  .label-#{$color} {
+    color: color-white();
+    background-color: $color-base;
+    border-color: $color-base;
+    text-align: center;
+
+    @include rounded-sm;
+    @include padded-md;
+    @include bordered;
+  }
+
+  .btn-#{$color} {
+    color: $color-base;
+    border-color: $color-base;
+
+    &:where(:hover, .active) {
+      color: color-white();
+      background-color: $color-base;
+    }
+
+    &:active {
+      color: color-white();
+      background-color: $color-light;
+    }
+
+    &:focus-visible {
+      outline-color: $color-light;
+    }
+  }
+
+  .btn-#{$color}-filled {
+    color: color-white();
+    background-color: $color-base;
+
+    &:where(:hover, .active) {
+      color: $color-base;
+      background-color: unset;
+    }
+
+    &:active {
+      background-color: unset;
+      color: $color-light;
+    }
+  }
+}

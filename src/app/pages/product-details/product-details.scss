@@ -1,0 +1,19 @@
+@use 'styles/main' as *;
+
+:host {
+  flex-direction: column;
+
+  @include page-md;
+}
+
+.reviews {
+  gap: spacing(lg);
+
+  @include flex-col;
+}
+
+.review-list {
+  gap: spacing(lg);
+
+  @include flex-col;
+}

@@ -1,0 +1,29 @@
+@use 'styles/main' as *;
+
+:host {
+  @include page-md;
+  @include flex-center;
+}
+
+.auth-form {
+  width: max(45%, 300px);
+  gap: spacing(lg);
+  padding: spacing(lg);
+  border-color: color(neutral);
+
+  @include bordered;
+  @include rounded-md;
+  @include flex-col;
+}
+
+.error-msg {
+  display: none;
+}
+
+:where(.auth-form .ng-invalid.ng-touched) {
+  @include control-error;
+
+  & ~ .error-msg {
+    display: unset;
+  }
+}

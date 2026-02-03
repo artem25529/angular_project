@@ -1,0 +1,16 @@
+<nav class="nav-bar">
+  <ul>
+    @for (config of routerLinkConfigs; track config.label) {
+      <li>
+        <a
+          class="nav-bar__link"
+          [routerLink]="config.routerLink"
+          [routerLinkActive]="config.routetLinkActive ?? ''"
+          [routerLinkActiveOptions]="{ exact: config.exact ?? false }"
+          [queryParams]="config.queryParams"
+          >{{ config.label }}</a
+        >
+      </li>
+    }
+  </ul>
+</nav>

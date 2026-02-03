@@ -1,0 +1,70 @@
+@use 'styles/main' as *;
+
+:host {
+  background-color: color-white();
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  @include shadow-sm;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: spacing(xl);
+  font-size: 1.2rem;
+  padding: spacing(md) spacing(xl);
+}
+
+.page-header__logo {
+  display: flex;
+  align-items: center;
+  gap: spacing(md);
+
+  @include rounded-sm;
+
+  &:hover {
+    .page-header__company {
+      color: color(primary, light);
+    }
+  }
+}
+
+.page-header__logo-image {
+  width: 1.16lh;
+  aspect-ratio: 1;
+}
+
+.page-header__company {
+  color: color(primary);
+
+  @include font-bold;
+  @include transition-fast;
+}
+
+.page-header__search {
+  border-radius: unset;
+  border-width: 0;
+  border-bottom: 2px solid color(secondary);
+
+  @include transition-fast;
+
+  &:is(:hover, :focus-visible) {
+    outline-width: 0;
+    border-color: color(secondary, light);
+  }
+}
+
+.page-header__right {
+  display: flex;
+  align-items: center;
+  gap: spacing(lg);
+  margin-left: auto;
+}
+
+.page-header__right-auth {
+  display: flex;
+  align-items: center;
+  gap: spacing(md);
+}

@@ -1,0 +1,71 @@
+@if (product) {
+  <section class="product-edit">
+    <header class="text-header">Edit Product Info</header>
+    <form class="product-edit__form" #form="ngForm" (ngSubmit)="handleSubmit(form)">
+      <div class="form-control">
+        <label for="image">Image</label>
+        <input
+          id="image"
+          name="image"
+          type="text"
+          [(ngModel)]="editForm.image"
+          #imageModel="ngModel"
+          [appErrorMsg]="imageModel"
+          required
+        />
+      </div>
+      <div class="form-control">
+        <label for="title">Title</label>
+        <input
+          id="title"
+          name="title"
+          type="text"
+          [(ngModel)]="editForm.title"
+          #titleModel="ngModel"
+          [appErrorMsg]="titleModel"
+          required
+          minlength="5"
+        />
+      </div>
+      <div class="form-control">
+        <label for="price">Price</label>
+        <input
+          id="price"
+          name="price"
+          type="number"
+          [(ngModel)]="editForm.price"
+          #priceModel="ngModel"
+          [appErrorMsg]="priceModel"
+          required
+        />
+      </div>
+      <div class="form-control">
+        <label for="stock">Stock</label>
+        <input
+          id="stock"
+          name="stock"
+          type="number"
+          [(ngModel)]="editForm.stock"
+          #stockModel="ngModel"
+          [appErrorMsg]="stockModel"
+          required
+        />
+      </div>
+      <div class="form-control">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="5"
+          [(ngModel)]="editForm.description"
+          #descriptionModel="ngModel"
+          [appErrorMsg]="descriptionModel"
+          required
+          minlength="5"
+        ></textarea>
+      </div>
+      <button class="btn btn-info" type="submit">Submit</button>
+    </form>
+  </section>
+  <img class="product-edit__image" [src]="product.image" alt="product-image" />
+}

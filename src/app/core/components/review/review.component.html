@@ -1,0 +1,10 @@
+<div class="review">
+  <img class="review__image" src="user.jpg" alt="user-image" />
+  <div class="review__info">
+    <div class="review__name font-size-lg font-bold">{{ review.name }}</div>
+    <app-rating [rating]="review.rate" />
+  </div>
+  <div class="review__text text">
+    {{ review.text }}
+  </div>
+</div>

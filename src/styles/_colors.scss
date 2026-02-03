@@ -1,0 +1,52 @@
+@use 'sass:map';
+@use 'sass:color';
+
+@function create-palette($color) {
+  @return (
+    'base': $color,
+    'dark': color.adjust($color, $lightness: -10%),
+    'light': color.adjust($color, $lightness: 10%)
+  );
+}
+
+$colors: (
+  'primary': create-palette(hsl(290, 50%, 50%)),
+  'secondary': create-palette(hsl(100, 50%, 50%)),
+  'neutral': create-palette(hsl(0, 0%, 50%)),
+  'success': create-palette(hsl(145, 50%, 50%)),
+  'danger': create-palette(hsl(0, 50%, 50%)),
+  'warning': create-palette(hsl(45, 50%, 50%)),
+  'info': create-palette(hsl(220, 50%, 50%)),
+);
+
+@function color($name, $variant: 'base') {
+  $palette: map.get($colors, $name);
+
+  @if not $palette {
+    @error "Color '#{$name}' not found. Available: #{map.keys($colors)}";
+  }
+
+  $color: map.get($palette, $variant);
+
+  @if not $color {
+    @error "Variant '#{$variant}' not in '#{$name}'. Available: #{map.keys($palette)}";
+  }
+
+  @return $color;
+}
+
+@function color-black() {
+  @return hsl(0, 0%, 8%);
+}
+
+@function color-white() {
+  @return hsl(0, 0%, 100%);
+}
+
+@function color-shadow() {
+  @return color.change(color-black(), $alpha: 0.4);
+}
+
+@function color-rating() {
+  @return rgb(255, 221, 0);
+}

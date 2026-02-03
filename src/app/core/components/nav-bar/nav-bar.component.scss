@@ -1,0 +1,8 @@
+@use 'styles/main' as *;
+
+.nav-bar {
+  ul {
+    display: flex;
+    gap: spacing(lg);
+  }
+}

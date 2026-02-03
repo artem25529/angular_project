@@ -1,0 +1,10 @@
+@use 'reset';
+@use 'normalize';
+
+@use 'colors' as *;
+@use 'mixins' as *;
+
+@forward 'mixins';
+@forward 'colors';
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');

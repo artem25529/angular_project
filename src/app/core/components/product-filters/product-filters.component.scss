@@ -1,0 +1,34 @@
+@use 'styles/main' as *;
+
+:host {
+  align-self: start;
+  position: sticky;
+}
+
+.filters-form {
+  gap: spacing(lg);
+
+  @include flex-col;
+}
+
+.filters-form__range {
+  display: flex;
+  gap: spacing(lg);
+
+  input[type='text'] {
+    width: 2em;
+    flex-grow: 1;
+  }
+}
+
+.filters-form__flags {
+  gap: spacing(sm);
+
+  @include flex-col;
+}
+
+.filters-form__flag {
+  display: flex;
+  gap: spacing(sm);
+  align-items: baseline;
+}
