@@ -1,8 +1,7 @@
-import { Inject, Injectable, LOCALE_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, Subject } from 'rxjs';
 import { ProductFilters } from '../models/product-filters';
 import { isEqual } from 'lodash';
-import { NumberParser } from '@internationalized/number';
 import { Params } from '@angular/router';
 import { User } from '../models/user';
 import { Notification } from '../models/notification';
@@ -11,11 +10,8 @@ import { Notification } from '../models/notification';
   providedIn: 'root',
 })
 export class SharedDataService {
-  constructor(@Inject(LOCALE_ID) locale: string) {
-    this.numberParser = new NumberParser(locale);
-  }
+  constructor() {}
 
-  numberParser: NumberParser;
   searchParams?: Params;
   lastValidatedUser?: Pick<User, 'id' | 'email'>;
 

@@ -14,19 +14,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     public sharedDataService: SharedDataService,
     public authService: AuthService,
-  ) {
-    this.inputControl = new FormControl('');
-  }
+  ) {}
 
-  inputControl: FormControl;
+  inputControl!: FormControl;
   subscription!: Subscription;
 
   ngOnInit() {
+    this.inputControl = new FormControl('');
     this.initSubscriptions();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   initSubscriptions() {
@@ -44,5 +39,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

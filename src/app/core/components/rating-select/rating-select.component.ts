@@ -26,10 +26,6 @@ export class RatingSelectComponent implements OnInit, OnDestroy {
     this.valueChangesSub = this.control.valueChanges.subscribe((_) => this.cdr.detectChanges());
   }
 
-  ngOnDestroy() {
-    this.valueChangesSub.unsubscribe();
-  }
-
   @HostBinding('attr.tabindex')
   tabIndex = 0;
 
@@ -62,5 +58,9 @@ export class RatingSelectComponent implements OnInit, OnDestroy {
     if (this.control.value) {
       this.control.markAsDirty();
     }
+  }
+
+  ngOnDestroy() {
+    this.valueChangesSub.unsubscribe();
   }
 }

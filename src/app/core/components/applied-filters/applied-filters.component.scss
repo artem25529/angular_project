@@ -2,7 +2,7 @@
 @use 'sass:color';
 
 :host {
-  position: absolute;
+  position: fixed;
   width: 100%;
 
   @include font-size-sm;

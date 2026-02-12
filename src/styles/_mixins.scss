@@ -209,6 +209,11 @@ $spacings: (
   @include transition-fast;
 
   transition-property: background-color;
+
+  &:disabled {
+    filter: grayscale(100%);
+    pointer-events: none;
+  }
 }
 
 .btn-sm {

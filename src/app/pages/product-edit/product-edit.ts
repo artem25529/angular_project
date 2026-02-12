@@ -26,10 +26,6 @@ export class ProductEdit implements OnInit, OnDestroy {
     this.initSubscriptions();
   }
 
-  ngOnDestroy() {
-    this.productSubscription.unsubscribe();
-  }
-
   handleSubmit(form: NgForm) {
     if (form.valid) {
       this.productService.update(this.editForm).subscribe((_) => {});
@@ -44,5 +40,9 @@ export class ProductEdit implements OnInit, OnDestroy {
         this.cdr.markForCheck();
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.productSubscription.unsubscribe();
   }
 }

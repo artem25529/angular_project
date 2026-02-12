@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../core/services/product.service';
 import { ReviewService } from '../../core/services/review.service';
 import { Product } from '../../core/models/product';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs';
 import { Review } from '../../core/models/review';
 
 @Component({
@@ -13,20 +12,20 @@ import { Review } from '../../core/models/review';
   templateUrl: './product-details.html',
   styleUrl: './product-details.scss',
 })
-export class ProductDetails {
+export class ProductDetails implements OnInit {
   constructor(
-    activatedRoute: ActivatedRoute,
-    productService: ProductService,
-    reviewService: ReviewService,
-  ) {
-    activatedRoute.params.subscribe((params) => {
-      const id = +params['id'];
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private reviewService: ReviewService,
+  ) {}
 
-      this.product$ = productService.getById(id);
-      this.reviews$ = reviewService.getAllByProductId(id);
-    });
+  product$!: Observable<Product>;
+  reviews$!: Observable<Review[]>;
+
+  ngOnInit() {
+    const productId = +this.activatedRoute.snapshot.params['id'];
+
+    this.product$ = this.productService.getById(productId);
+    this.reviews$ = this.reviewService.getAllByProductId(productId);
   }
-
-  product$?: Observable<Product>;
-  reviews$?: Observable<Review[]>;
 }

@@ -50,14 +50,6 @@ export class ErrorMsgDirective implements OnInit, AfterViewInit, OnDestroy {
     this.handleError();
   }
 
-  ngOnDestroy() {
-    if (!this.statusSubscription) {
-      return;
-    }
-
-    this.statusSubscription.unsubscribe();
-  }
-
   handleError() {
     if (!this.control.errors) {
       return;
@@ -86,6 +78,9 @@ export class ErrorMsgDirective implements OnInit, AfterViewInit, OnDestroy {
       case 'required':
         msg = 'Value is required.';
         break;
+      case 'min':
+        msg = `Value cannot be less than ${errors.min.min}.`;
+        break;
       case 'minlength':
         msg = `Min length is ${errors.minlength.requiredLength}, actual is ${errors.minlength.actualLength}.`;
         break;
@@ -109,5 +104,13 @@ export class ErrorMsgDirective implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return msg;
+  }
+
+  ngOnDestroy() {
+    if (!this.statusSubscription) {
+      return;
+    }
+
+    this.statusSubscription.unsubscribe();
   }
 }

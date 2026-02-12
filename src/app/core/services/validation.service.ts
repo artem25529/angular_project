@@ -13,14 +13,18 @@ import { SharedDataService } from './shared-data.service';
 })
 export class ValidationService {
   constructor(
-    @Inject(LOCALE_ID) locale: string,
+    @Inject(LOCALE_ID) private locale: string,
     private userService: UserService,
     private sharedDataService: SharedDataService,
   ) {
-    this.numberParser = new NumberParser(locale);
+    this.initData();
   }
 
-  numberParser: NumberParser;
+  numberParser!: NumberParser;
+
+  private initData() {
+    this.numberParser = new NumberParser(this.locale);
+  }
 
   loginValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {

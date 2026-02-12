@@ -26,10 +26,6 @@ export class AddToCartButtonComponent implements OnInit, OnDestroy {
     this.initSubscriptions();
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
   initData() {
     this.cart = this.authService.cart();
 
@@ -82,5 +78,9 @@ export class AddToCartButtonComponent implements OnInit, OnDestroy {
     }
 
     this.changeCountSubject.next(this.itemsInCartCount);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

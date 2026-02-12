@@ -42,8 +42,12 @@ import {
   bootstrap: [App],
 })
 export class AppModule {
-  constructor(iconLibrary: FaIconLibrary) {
-    iconLibrary.addIcons(
+  constructor(private iconLibrary: FaIconLibrary) {
+    this.loadIcons();
+  }
+
+  private loadIcons() {
+    this.iconLibrary.addIcons(
       faStar,
       faPlus,
       faMinus,

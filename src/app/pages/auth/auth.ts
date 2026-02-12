@@ -30,10 +30,6 @@ export class Auth implements OnInit, OnDestroy {
     this.initSubscriptions();
   }
 
-  ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-  }
-
   initForm() {
     this.authForm = this.fb.group(
       {
@@ -75,5 +71,9 @@ export class Auth implements OnInit, OnDestroy {
         this.authService.login(this.sharedDataService.lastValidatedUser!);
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 }

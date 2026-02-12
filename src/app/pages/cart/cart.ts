@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CartItem } from '../../core/models/cart-item';
 import { range } from 'lodash';
 import { AuthService } from '../../core/services/auth.service';
-import { NavigationStart, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Cart } from '../../core/models/cart';
 
 @Component({
@@ -12,13 +10,8 @@ import { Cart } from '../../core/models/cart';
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
 })
-export class CartPage implements OnInit {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-  ) {}
-
-  private subscription!: Subscription;
+export class CartPage implements OnInit, OnDestroy {
+  constructor(private authService: AuthService) {}
 
   cart!: Cart | null;
   cartItems!: CartItem[];
@@ -36,7 +29,6 @@ export class CartPage implements OnInit {
     this.cartItems = this.cart ? this.cart.products : [];
 
     this.initData();
-    this.initSubscription();
   }
 
   initData() {
@@ -44,24 +36,6 @@ export class CartPage implements OnInit {
     this.startIdx = (this.page - 1) * this.limit;
     this.endIdx = this.calculateEndIdx();
     this.visibleIndexes = this.createVisibleIndexes();
-  }
-
-  initSubscription() {
-    this.subscription = this.router.events.subscribe((e) => {
-      if (e instanceof NavigationStart) {
-        if (this.modified) {
-          const sortedIndexes = [...this.removedIndexes].sort((a, b) => b - a);
-
-          sortedIndexes.forEach((val) => {
-            this.cartItems.splice(val, 1);
-          });
-
-          this.authService.syncCart(this.authService.cart()!);
-        }
-
-        this.subscription.unsubscribe();
-      }
-    });
   }
 
   normalizeItems() {
@@ -114,5 +88,17 @@ export class CartPage implements OnInit {
   changePage(page: number) {
     this.page = page;
     this.initData();
+  }
+
+  ngOnDestroy() {
+    if (this.modified) {
+      const sortedIndexes = [...this.removedIndexes].sort((a, b) => b - a);
+
+      sortedIndexes.forEach((val) => {
+        this.cartItems.splice(val, 1);
+      });
+
+      this.authService.syncCart(this.cart!);
+    }
   }
 }
