@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, distinctUntilChanged, Subject } from 'rxjs';
-import { ProductFilters } from '../models/product-filters';
-import { isEqual } from 'lodash';
 import { Params } from '@angular/router';
-import { User } from '../models/user';
-import { Notification } from '../models/notification';
+import { BehaviorSubject, distinctUntilChanged, Subject } from 'rxjs';
+import { isEqual } from 'lodash';
+import { ProductFilters } from '@product/models/product-filters';
+import { User } from '@auth/models/user';
+import { Notification } from '@core/models/notification';
 
 @Injectable({
   providedIn: 'root',

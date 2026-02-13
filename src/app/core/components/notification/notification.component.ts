@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { SharedDataService } from '../../services/shared-data.service';
 import { delay, Subscription, tap } from 'rxjs';
-import { Notification } from '../../models/notification';
+import { Notification } from '@core/models/notification';
 
 @Component({
   selector: 'app-notification',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLinkConfig } from '../../models/router-link-config';
+import { RouterLinkConfig } from '@core/models/router-link-config';
 
 @Component({
   selector: 'app-nav-bar',

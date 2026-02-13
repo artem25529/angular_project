@@ -1,5 +1,5 @@
-import { AppliedFilter } from '../models/applied-filter';
-import { ProductFilters } from '../models/product-filters';
+import { AppliedFilter } from '@product/models/applied-filter';
+import { ProductFilters } from '@product/models/product-filters';
 
 export function createAppliedFiltersFromProductFilters(
   productFilters: ProductFilters,

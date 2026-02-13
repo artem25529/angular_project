@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, first, Subscription } from 'rxjs';
-import { SharedDataService } from '../../services/shared-data.service';
-import { AuthService } from '../../services/auth.service';
+import { SharedDataService } from '@core/services/shared-data.service';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'app-header',

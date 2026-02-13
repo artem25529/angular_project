@@ -1,19 +1,11 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AppRoutingModule } from './app-routing-module';
-import { CoreModule } from './core/core-module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-
+import { CoreModule } from '@core/core-module';
+import { ProductModule } from '@product/product-module';
+import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
-import { Home } from './pages/home/home';
-import { ProductDetails } from './pages/product-details/product-details';
-import { ProductEdit } from './pages/product-edit/product-edit';
-import { CartPage } from './pages/cart/cart';
-import { Auth } from './pages/auth/auth';
 
 import {
   faStar,
@@ -28,16 +20,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
-  declarations: [App, Home, ProductDetails, ProductEdit, CartPage, Auth],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    CoreModule,
-  ],
+  declarations: [App],
+  imports: [BrowserModule, FontAwesomeModule, CoreModule, ProductModule, AppRoutingModule],
   providers: [provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })

@@ -1,12 +1,12 @@
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
-import { NumberParser } from '@internationalized/number';
-import { ProductFiltersForm } from '../models/product-filters-form';
-import { ProductFilters } from '../models/product-filters';
 import { Params } from '@angular/router';
 import { AbstractControl, AsyncValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
-import { UserService } from './user.service';
+import { NumberParser } from '@internationalized/number';
 import { map, Observable } from 'rxjs';
-import { SharedDataService } from './shared-data.service';
+import { ProductFiltersForm } from '@product/models/product-filters-form';
+import { ProductFilters } from '@product/models/product-filters';
+import { UserService } from '@core/services/user.service';
+import { SharedDataService } from '@core/services/shared-data.service';
 
 @Injectable({
   providedIn: 'root',
