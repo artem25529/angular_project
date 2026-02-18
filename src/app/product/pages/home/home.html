@@ -1,9 +1,11 @@
-<app-product-filters />
-<section class="product-list">
-  <app-applied-filters />
-  @for (product of products$ | async; track product.id) {
-    <app-product-card [product]="product" />
-  } @empty {
-    <div class="font-semi-bold font-size-lg">No products for your filters.</div>
-  }
-</section>
+<ng-container>
+  <app-product-filters />
+  <section class="product-list">
+    <app-applied-filters />
+    @for (product of products$ | async; track product.id) {
+      <app-product-card [product]="product" />
+    } @empty {
+      <div class="font-semi-bold font-size-lg">No products for your filters.</div>
+    }
+  </section>
+</ng-container>

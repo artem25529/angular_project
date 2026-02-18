@@ -12,21 +12,15 @@ export class AuthService {
     private router: Router,
     private userService: UserService,
     private cartService: CartService,
-  ) {
-    this.initData();
-  }
+  ) {}
 
   private localStorageUserKey = 'user';
 
-  loggedInUser!: WritableSignal<User | null>;
-
-  private initData() {
-    this.loggedInUser = signal<User | null>(
-      localStorage.getItem(this.localStorageUserKey)
-        ? JSON.parse(localStorage.getItem(this.localStorageUserKey)!)
-        : null,
-    );
-  }
+  loggedInUser: WritableSignal<User | null> = signal<User | null>(
+    localStorage.getItem(this.localStorageUserKey)
+      ? JSON.parse(localStorage.getItem(this.localStorageUserKey)!)
+      : null,
+  );
 
   login({ id, email }: User) {
     const user = { id, email };

@@ -1,6 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, switchMap, combineLatest, Subscription, shareReplay, catchError } from 'rxjs';
+import {
+  Observable,
+  switchMap,
+  combineLatest,
+  Subscription,
+  shareReplay,
+  scan,
+  startWith,
+} from 'rxjs';
 import { SharedDataService } from '@core/services/shared-data.service';
 import { ValidationService } from '@core/services/validation.service';
 import { ProductService } from '@product/services/product.service';
@@ -26,17 +34,31 @@ export class Home implements OnInit, OnDestroy {
   ngOnInit() {
     const queryParams = this.activatedRoute.snapshot.queryParams;
 
-    this.sharedDataService.updateHeaderInputSubject(queryParams['query'] ?? '');
+    this.sharedDataService.updateHeaderInputSubject(
+      this.sharedDataService.headerInputSubjectValue() ?? queryParams['query'] ?? '',
+    );
     this.sharedDataService.updateProductFiltersSubject(
       this.validationService.createProductFiltersFromParams(queryParams),
     );
 
-    this.products$ = combineLatest([
+    const baseProducts$ = combineLatest([
       this.sharedDataService.headerInput$,
       this.sharedDataService.productFilters$,
     ]).pipe(
       switchMap(([query, productFilters]) => this.productService.getAll(query, productFilters)),
       shareReplay({ bufferSize: 1, refCount: true }),
+    );
+
+    this.products$ = baseProducts$.pipe(
+      switchMap((products) =>
+        this.sharedDataService.deletedProduct$.pipe(
+          scan(
+            (currProducts, deletedId) => currProducts.filter((p) => p.id !== deletedId),
+            products,
+          ),
+          startWith(products),
+        ),
+      ),
     );
 
     this.foundProductAmonutSubscription = this.products$.subscribe((products) =>

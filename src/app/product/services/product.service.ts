@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Params, Router } from '@angular/router';
-import { catchError, Observable, of } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { SharedDataService } from '@core/services/shared-data.service';
 import { Product } from '@product/models/product';
 import { ProductFilters } from '@product/models/product-filters';
 import { ErrorHandlingService } from '@core/services/error-handling.service';
+import { CartService } from '@cart/services/cart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class ProductService {
     private router: Router,
     private sharedDataService: SharedDataService,
     private errorHandlingService: ErrorHandlingService,
+    private cartService: CartService,
   ) {}
 
   private url = 'http://localhost:3000/products';
@@ -45,6 +47,13 @@ export class ProductService {
   deleteById(id: number): Observable<Product | null> {
     return this.http
       .delete<Product>(`${this.url}/${id}`)
+      .pipe(
+        tap((res) => {
+          if (res) {
+            this.cartService.removeProductFromCarts(id);
+          }
+        }),
+      )
       .pipe(this.errorHandlingService.handleError<Product | null>(null));
   }
 

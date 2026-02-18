@@ -13,21 +13,19 @@ export class CartService {
   constructor(
     private http: HttpClient,
     private errorHandlingService: ErrorHandlingService,
-  ) {
-    this.initData();
-  }
+  ) {}
 
   private url = 'http://localhost:3000/carts';
   private localStorageCartKey = 'cart';
 
-  cart!: WritableSignal<Cart | null>;
+  cart: WritableSignal<Cart | null> = signal<Cart | null>(
+    localStorage.getItem(this.localStorageCartKey)
+      ? JSON.parse(localStorage.getItem(this.localStorageCartKey)!)
+      : null,
+  );
 
-  private initData() {
-    this.cart = signal<Cart | null>(
-      localStorage.getItem(this.localStorageCartKey)
-        ? JSON.parse(localStorage.getItem(this.localStorageCartKey)!)
-        : null,
-    );
+  getAll(): Observable<Cart[]> {
+    return this.http.get<Cart[]>(this.url).pipe(this.errorHandlingService.handleError<Cart[]>([]));
   }
 
   getByUserId(userId: number): Observable<Cart | null> {
@@ -88,9 +86,11 @@ export class CartService {
     }
   }
 
-  pushState() {
+  pushState(cart?: Cart) {
+    const targetCart = cart ? cart : this.cart();
+
     this.http
-      .patch<Cart>(`${this.url}/${this.cart()!.id}`, this.cart())
+      .patch<Cart>(`${this.url}/${targetCart!.id}`, targetCart)
       .pipe(this.errorHandlingService.handleError<Cart | null>(null))
       .subscribe((cart) => {
         if (cart) {
@@ -99,6 +99,24 @@ export class CartService {
           console.error('Error pushing cart state to db.');
         }
       });
+  }
+
+  removeProductFromCarts(productId: number) {
+    this.getAll().subscribe((carts) => {
+      carts.forEach((cart) => {
+        let idx;
+
+        if ((idx = cart.products.findIndex((p) => p.id === productId)) >= 0) {
+          cart.products.splice(idx, 1);
+
+          if (this.cart() && this.cart()?.id === cart.id) {
+            this.cart.set(cart);
+          }
+
+          this.pushState(cart);
+        }
+      });
+    });
   }
 
   setCart(cart: Cart) {

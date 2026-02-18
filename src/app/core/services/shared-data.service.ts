@@ -24,6 +24,10 @@ export class SharedDataService {
     this.headerInputSubject.next(val);
   }
 
+  headerInputSubjectValue() {
+    return this.headerInputSubject.getValue();
+  }
+
   //product filters
   private productFiltersSubject = new BehaviorSubject<ProductFilters | undefined>({});
 
@@ -44,6 +48,7 @@ export class SharedDataService {
     this.productFilterToRemoveSubject.next(val);
   }
 
+  //product amount
   private foundProductAmonutSubject = new BehaviorSubject<number | undefined>(undefined);
 
   foundProductAmonut$ = this.foundProductAmonutSubject.asObservable().pipe(distinctUntilChanged());
@@ -52,11 +57,21 @@ export class SharedDataService {
     this.foundProductAmonutSubject.next(val);
   }
 
+  //notification
   private notificationSubject = new Subject<Notification>();
 
   notification$ = this.notificationSubject.asObservable().pipe(distinctUntilChanged());
 
   updateNotificationSubject(val: Notification) {
     this.notificationSubject.next(val);
+  }
+
+  //deleted product
+  private deletedProductSubject = new Subject<number>();
+
+  deletedProduct$ = this.deletedProductSubject.asObservable();
+
+  updateDeletedProductSubject(val: number) {
+    this.deletedProductSubject.next(val);
   }
 }

@@ -1,12 +1,14 @@
-<div
-  class="checkbox"
-  [ngClass]="{ checked: control.value }"
-  role="checkbox"
-  tabindex="0"
-  [attr.aria-labelledby]="id"
-  (keydown)="handleKeyDown($event)"
->
-  <fa-icon [icon]="['fas', 'check']" />
-</div>
+<ng-container>
+  <div
+    class="checkbox"
+    [ngClass]="{ checked: control.value }"
+    role="checkbox"
+    tabindex="0"
+    [attr.aria-labelledby]="id"
+    (keydown)="handleKeyDown($event)"
+  >
+    <fa-icon [icon]="['fas', 'check']" />
+  </div>
 
-<div [id]="id" class="label">{{ label }}</div>
+  <div [id]="id" class="label">{{ label }}</div>
+</ng-container>
