@@ -1,4 +1,4 @@
-@if (cartItems && cartItems.length > 0) {
+@if (cartItems().length > 0) {
   <table>
     <thead>
       <tr>
@@ -11,14 +11,16 @@
       </tr>
     </thead>
     <tbody>
-      @for (idx of visibleIndexes; track idx) {
+      @for (idx of visibleIndexes(); track idx) {
+        @let cartItem = cartItems()[idx];
+
         <tr>
-          <td>{{ cartItems[idx].id }}</td>
-          <td>{{ cartItems[idx].title }}</td>
-          <td>{{ cartItems[idx].count }}</td>
-          <td>{{ cartItems[idx].price | currency: 'USD' : 'symbol' : '2.2-2' }}</td>
+          <td>{{ cartItem.id }}</td>
+          <td>{{ cartItem.title }}</td>
+          <td>{{ cartItem.count }}</td>
+          <td>{{ cartItem.price | currency: 'USD' : 'symbol' : '2.2-2' }}</td>
           <td>
-            {{ cartItems[idx].price * cartItems[idx].count | currency: 'USD' : 'symbol' : '2.2-2' }}
+            {{ cartItem.price * cartItem.count | currency: 'USD' : 'symbol' : '2.2-2' }}
           </td>
           <td>
             <button class="btn btn-danger btn-sm" type="button" (click)="removeItem(idx)">
@@ -30,15 +32,15 @@
     </tbody>
   </table>
 
-  @if (pageCount > 1) {
+  @if (pageCount() > 1) {
     <section class="pagination">
-      @for (idx of createIndexes(0, pageCount); track idx) {
+      @for (idx of createIndexes(0, pageCount()); track idx) {
         @let pageNum = idx + 1;
 
         <button
           class="btn btn-info"
           type="button"
-          [ngClass]="{ active: page === pageNum }"
+          [ngClass]="{ active: page() === pageNum }"
           (click)="changePage(pageNum)"
         >
           {{ pageNum }}

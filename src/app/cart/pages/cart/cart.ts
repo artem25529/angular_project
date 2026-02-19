@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, inject, OnDestroy, signal } from '@angular/core';
 import { range } from 'lodash';
-import { CartItem } from '@cart/models/cart-item';
-import { Cart } from '@cart/models/cart';
 import { CartService } from '@cart/services/cart.service';
 
 @Component({
@@ -10,94 +8,68 @@ import { CartService } from '@cart/services/cart.service';
   templateUrl: './cart.html',
   styleUrl: './cart.scss',
 })
-export class CartPage implements OnInit, OnDestroy {
-  constructor(private cartService: CartService) {}
+export class CartPage implements OnDestroy {
+  private cartService = inject(CartService);
+  private cart = this.cartService.cart;
 
-  cart!: Cart | null;
-  cartItems!: CartItem[];
-  pageCount!: number;
-  removedIndexes: number[] = [];
-  startIdx!: number;
-  endIdx!: number;
-  visibleIndexes!: number[];
-  page = 1;
-  limit = 5;
   modified = false;
+  limit = 5;
 
-  ngOnInit() {
-    this.cart = this.cartService.cart();
-    this.cartItems = this.cart ? this.cart.products : [];
+  page = signal(1);
+  cartItems = computed(() => {
+    const currCart = this.cart();
 
-    this.initData();
-  }
-
-  initData() {
-    this.pageCount = this.calculatePageCount();
-    this.startIdx = (this.page - 1) * this.limit;
-    this.endIdx = this.calculateEndIdx();
-    this.visibleIndexes = this.createVisibleIndexes();
-  }
-
-  normalizeItems() {
-    if (!this.visibleIndexes.length) {
-      const amount = this.endIdx - this.startIdx;
-      this.cartItems.splice(this.startIdx, amount);
-
-      this.removedIndexes = this.removedIndexes
-        .filter((i) => i < this.startIdx || i >= this.endIdx)
-        .map((i) => {
-          if (i >= this.endIdx) {
-            return i - this.endIdx;
-          }
-
-          return i;
-        });
-
-      if (this.page > 1) {
-        this.page--;
-      }
-
-      this.initData();
+    if (!currCart) {
+      return [];
     }
-  }
+
+    return currCart.products;
+  });
+
+  pageCount = computed(() => {
+    return Math.ceil(this.cartItems().length / this.limit);
+  });
+
+  visibleIndexes = computed(() => {
+    const startIdx = (this.page() - 1) * this.limit;
+    const endIdx = Math.min(startIdx + this.limit, this.cartItems().length);
+
+    if (endIdx > startIdx) {
+      return this.createIndexes(startIdx, endIdx);
+    } else {
+      return [];
+    }
+  });
 
   removeItem(idx: number) {
     this.modified = true;
-    this.removedIndexes.push(idx);
-    this.visibleIndexes = this.createVisibleIndexes();
 
-    this.normalizeItems();
+    if (this.visibleIndexes().length === 1 && this.page() > 1) {
+      this.changePage(this.page() - 1);
+    }
+
+    this.cartService.cart.update((curr) => {
+      if (!curr) {
+        return curr;
+      }
+
+      const updatedProducts = [...curr.products];
+      updatedProducts.splice(idx, 1);
+
+      return { ...curr, products: updatedProducts };
+    });
   }
 
-  createVisibleIndexes() {
-    return range(this.startIdx, this.endIdx).filter((i) => !this.removedIndexes.includes(i));
+  changePage(page: number) {
+    this.page.set(page);
   }
 
   createIndexes(start: number, end: number) {
     return range(start, end);
   }
 
-  calculatePageCount() {
-    return Math.ceil(this.cartItems.length / this.limit);
-  }
-
-  calculateEndIdx() {
-    return Math.min(this.startIdx + this.limit, this.cartItems.length);
-  }
-
-  changePage(page: number) {
-    this.page = page;
-    this.initData();
-  }
-
   ngOnDestroy() {
     if (this.modified) {
-      const sortedIndexes = [...this.removedIndexes].sort((a, b) => b - a);
-
-      sortedIndexes.forEach((val) => {
-        this.cartItems.splice(val, 1);
-      });
-
       this.cartService.pushState();
     }
   }

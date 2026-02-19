@@ -89,6 +89,10 @@ export class CartService {
   pushState(cart?: Cart) {
     const targetCart = cart ? cart : this.cart();
 
+    if (!cart && this.cart()) {
+      localStorage.setItem(this.localStorageCartKey, JSON.stringify(this.cart()));
+    }
+
     this.http
       .patch<Cart>(`${this.url}/${targetCart!.id}`, targetCart)
       .pipe(this.errorHandlingService.handleError<Cart | null>(null))
