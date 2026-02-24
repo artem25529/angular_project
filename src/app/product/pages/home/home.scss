@@ -1,0 +1,16 @@
+@use 'styles/main.scss' as *;
+
+:host {
+  display: flex;
+  gap: spacing(lg);
+  padding: spacing(lg);
+  overflow: visible;
+}
+
+.product-list {
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: spacing(lg);
+}

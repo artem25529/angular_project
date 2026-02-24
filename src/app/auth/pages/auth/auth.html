@@ -1,0 +1,24 @@
+<form class="auth-form" [formGroup]="authForm" (ngSubmit)="handleSubmit()">
+  <div class="form-control">
+    <label for="email">Email</label>
+    <input
+      id="email"
+      autocomplete="on"
+      type="text"
+      formControlName="email"
+      [appErrorMsg]="authForm.get('email')!"
+    />
+  </div>
+  <div class="form-control">
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      [appErrorMsg]="authForm.get('password')!"
+    />
+  </div>
+  <button class="btn btn-primary btn-primary-filled" type="submit">
+    {{ isSignup ? 'Sign Up' : 'Log In' }}
+  </button>
+</form>

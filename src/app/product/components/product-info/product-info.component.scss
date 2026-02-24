@@ -1,0 +1,30 @@
+@use 'styles/main' as *;
+
+.product-info {
+  display: flex;
+  align-items: start;
+  gap: spacing(xl);
+}
+
+.product-info__image {
+  width: 40%;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+
+.product-info__content-wrapper {
+  gap: spacing(xl);
+
+  @include flex-col;
+}
+
+.product-info__content {
+  gap: spacing(lg);
+
+  @include flex-col;
+}
+
+.product-info__rating {
+  display: flex;
+  gap: spacing(md);
+}

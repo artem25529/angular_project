@@ -1,0 +1,105 @@
+@use 'colors' as *;
+@use 'mixins' as *;
+
+:root {
+  font:
+    normal normal 16px/1.5 'Open Sans',
+    sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: 'wdth' 100;
+  color: color-black();
+  background-color: color-white();
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 3.815rem;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 3.052rem;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 2.441rem;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 1.953rem;
+  line-height: 1.3;
+}
+
+h5 {
+  font-size: 1.5625rem;
+  line-height: 1.4;
+}
+
+h6 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+a {
+  display: inline-block;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+button {
+  cursor: pointer;
+  background-color: transparent;
+  white-space: nowrap;
+}
+
+hr {
+  margin-block: spacing(xl);
+  border-color: color-shadow();
+}
+
+.label,
+label,
+legend {
+  cursor: default;
+
+  @include font-semi-bold;
+}
+
+input,
+textarea {
+  @include control;
+}
+
+textarea {
+  resize: vertical;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  @include font-heavy;
+}
+
+:focus-visible {
+  @include outlined;
+
+  outline-color: color(primary, light);
+}

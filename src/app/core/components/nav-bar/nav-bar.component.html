@@ -1,0 +1,9 @@
+<nav class="nav-bar">
+  <ul>
+    @for (config of routerLinkConfigs; track config.label) {
+      <li>
+        <a class="nav-bar__link" [routerLink]="config.routerLink">{{ config.label }}</a>
+      </li>
+    }
+  </ul>
+</nav>

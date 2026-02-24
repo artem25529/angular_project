@@ -1,0 +1,37 @@
+<form class="filters-form" [formGroup]="filtersForm">
+  <fieldset formArrayName="rating">
+    <legend>Rating</legend>
+    <div class="filters-form__range">
+      <app-rating-select [control]="filtersForm.get('rating.0')!" />
+      <app-rating-select [control]="filtersForm.get('rating.1')!" />
+    </div>
+  </fieldset>
+  <fieldset formArrayName="price" class="filters-form__price">
+    <legend>Price</legend>
+    <div class="filters-form__range">
+      <input aria-label="min price" id="minPrice" type="text" formControlName="0" />
+      <input aria-label="max price" id="maxPrice" type="text" formControlName="1" />
+    </div>
+  </fieldset>
+
+  <div class="filters-form__flags">
+    <div class="filters-form__flag">
+      <app-checkbox [control]="filtersForm.get('hasReviews')!" label="Has Reviews" />
+    </div>
+    <div class="filters-form__flag">
+      <app-checkbox [control]="filtersForm.get('inStock')!" label="In Stock" />
+    </div>
+  </div>
+
+  @let amount = foundProductAmount$ | async;
+
+  @if (amount !== undefined) {
+    <div class="label label-info">Found {{ amount }} Product(s)</div>
+  }
+
+  @if (showRemoveAllFiltersButton()) {
+    <button class="filters-form__reset btn btn-neutral" type="button" (click)="resetForm()">
+      Remove All Filters
+    </button>
+  }
+</form>

@@ -1,0 +1,7 @@
+@for (count of [1, 2, 3, 4, 5]; track $index) {
+  <fa-icon
+    [icon]="['fas', 'star']"
+    [ngClass]="{ selected: control.value === count }"
+    (click)="selectRating(count)"
+  />
+}

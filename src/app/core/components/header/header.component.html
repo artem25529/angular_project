@@ -1,0 +1,37 @@
+<header class="page-header">
+  <a class="page-header__logo" routerLink="" [queryParams]="sharedDataService.searchParams">
+    <img class="page-header__logo-image" src="logo.jpg" alt="site-logo" />
+    <div class="page-header__company">Perfume</div>
+  </a>
+  <app-nav-bar />
+  <div class="page-header__right">
+    @if (authService.loggedInUser()) {
+      <a routerLink="cart" routerLinkActive="active" class="nav-bar__link">
+        <fa-icon [icon]="['fas', 'cart-shopping']" />
+      </a>
+    }
+    <input id="query" class="page-header__search" type="text" [formControl]="inputControl" />
+    <div class="page-header__right-auth">
+      @if (authService.loggedInUser()) {
+        <div class="font-semi-bold">{{ authService.loggedInUser()?.email }}</div>
+        <button class="btn btn-secondary btn-secondary-filled" type="button" (click)="logout()">
+          <fa-icon [icon]="['fas', 'arrow-right-from-bracket']" />
+        </button>
+      } @else {
+        <button class="btn btn-secondary" type="button" routerLink="auth">
+          Log In
+          <fa-icon [icon]="['fas', 'arrow-right-to-bracket']" />
+        </button>
+        <button
+          class="btn btn-secondary btn-secondary-filled"
+          type="button"
+          routerLink="auth"
+          [queryParams]="{ signup: true }"
+        >
+          Sign Up
+          <fa-icon [icon]="['fas', 'user-plus']" />
+        </button>
+      }
+    </div>
+  </div>
+</header>

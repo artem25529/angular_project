@@ -1,0 +1,26 @@
+@use 'styles/main' as *;
+
+:host {
+  position: fixed;
+  top: 5rem;
+  z-index: 100;
+  left: 50%;
+  translate: -50%;
+}
+
+.notification {
+  width: min(90vw, 1000px);
+
+  @include padded-lg;
+  @include rounded-md;
+  @include font-semi-bold;
+  @include font-size-lg;
+
+  &.error {
+    background-color: color(danger);
+  }
+
+  &.success {
+    background-color: color(success);
+  }
+}

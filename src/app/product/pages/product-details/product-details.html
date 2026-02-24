@@ -1,0 +1,18 @@
+@if (product$ | async; as product) {
+  <app-product-info [product]="product" />
+  <hr />
+  <section class="reviews">
+    <div class="review-list">
+      @if (reviews$ | async; as reviews) {
+        @if (reviews && reviews.length > 0) {
+          <header class="font-size-lg font-semi-bold">Customer reviews:</header>
+          @for (review of reviews; track review.id) {
+            <app-review [review]="review" />
+          }
+        } @else {
+          <header class="font-size-lg font-semi-bold">No reviews yet.</header>
+        }
+      }
+    </div>
+  </section>
+}

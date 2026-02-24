@@ -1,0 +1,43 @@
+@use 'styles/main.scss' as *;
+
+.product-card {
+  gap: spacing(md);
+
+  @include flex-col;
+}
+
+.product-card__link {
+  gap: inherit;
+
+  @include flex-col;
+
+  &:focus-visible {
+    outline: none;
+
+    @include shadow-md;
+  }
+}
+
+.product-card__title {
+  @include line-clamp(2);
+  @include text-condensed;
+}
+
+.product-card__image {
+  width: 100%;
+  aspect-ratio: 6 / 5;
+}
+
+.product-card__buttons {
+  display: flex;
+  gap: spacing(sm);
+
+  app-add-to-cart-button {
+    margin-right: auto;
+  }
+}
+
+.product-card__bottom {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,9 @@
+@use 'styles/main' as *;
+
+:host {
+  @include font-semi-bold;
+}
+
+fa-icon {
+  color: color-rating();
+}

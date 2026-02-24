@@ -1,0 +1,29 @@
+@use 'styles/main' as *;
+
+.review {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: spacing(lg);
+}
+
+.review__image {
+  width: 2.4lh;
+  aspect-ratio: 1;
+  object-fit: cover;
+
+  @include rounded-full;
+}
+
+.review__info {
+  align-self: center;
+}
+
+.review__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.review__text {
+  grid-column-start: 2;
+}

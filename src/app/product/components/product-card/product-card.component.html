@@ -1,0 +1,19 @@
+<figure class="product-card">
+  <a class="product-card__link" [routerLink]="'product/' + product.id">
+    <img class="product-card__image" [src]="product.image" alt="product-image" />
+    <figcaption class="product-card__title">{{ product.title }}</figcaption>
+  </a>
+  @if (authService.loggedInUser()) {
+    <section class="product-card__buttons">
+      <app-add-to-cart-button [product]="product" />
+      <button class="btn btn-info" type="button" [routerLink]="'/product/edit/' + product.id">
+        Edit
+      </button>
+      <button class="btn btn-danger" type="button" (click)="deleteProduct()">Delete</button>
+    </section>
+  }
+  <section class="product-card__bottom">
+    <app-rating [rating]="product.rating.rate" />
+    <div class="font-bold">{{ product.price | currency: 'USD' : 'symbol' : '2.2-2' }}</div>
+  </section>
+</figure>

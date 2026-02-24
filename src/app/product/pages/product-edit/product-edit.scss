@@ -1,0 +1,30 @@
+@use 'styles/main' as *;
+
+:host {
+  align-items: start;
+  gap: spacing(xl);
+
+  @include page-md;
+}
+
+.product-edit {
+  gap: spacing(lg);
+  flex: 1;
+
+  @include flex-col;
+}
+
+.product-edit__image {
+  width: 40%;
+}
+
+.product-edit__form {
+  gap: spacing(lg);
+  flex: 1 0;
+
+  @include flex-col;
+}
+
+:where(.product-edit__form .ng-invalid) {
+  @include control-error;
+}
